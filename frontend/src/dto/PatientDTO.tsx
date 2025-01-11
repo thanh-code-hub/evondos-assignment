@@ -1,5 +1,5 @@
 export interface PatientDTO {
-    id: number;
+    id?: number;
     name: string;
     dob: string;
     condition: string;

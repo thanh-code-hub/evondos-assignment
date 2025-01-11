@@ -1,22 +1,32 @@
 // Import required modules
 const express = require("express");
 const { Pool } = require("pg");
+const cors = require('cors');
+
+var corsOptions = {
+    origin: 'http://localhost:3000',
+    optionsSuccessStatus: 200 // some legacy browsers (IE11, various SmartTVs) choke on 204
+}
 
 // Initialize the Express app
 const app = express();
 const port = 3001;
+
+app.use(cors(corsOptions));
 
 // Middleware to parse JSON
 app.use(express.json());
 
 // PostgreSQL connection configuration
 const pool = new Pool({
-    user: "your_username", // Replace with your PostgreSQL username
+    user: "postgres", // Replace with your PostgreSQL username
     host: "localhost",     // Replace with your PostgreSQL host
-    database: "your_database", // Replace with your PostgreSQL database name
-    password: "your_password", // Replace with your PostgreSQL password
+    database: "postgres", // Replace with your PostgreSQL database name
+    password: "admin", // Replace with your PostgreSQL password
     port: 5432,             // Default PostgreSQL port
 });
+
+pool.connect()
 
 // API endpoint to fetch data from the database
 app.get("/api/data", async (req, res) => {
@@ -32,14 +42,37 @@ app.get("/api/data", async (req, res) => {
     }
 });
 
-app.get("/api/data/patient/:id", (req, res) => {
-    res.json({
-        id: 1,
-        name: 'check',
-        dob: '01.01.1970',
-        condition: 'good'
-    });
+//fetch patient by id
+app.get("/api/data/patient/:id", async (req, res) => {
+    try {
+        // Query the database
+        const result = await pool.query(`SELECT * FROM patients WHERE id=${req.params.id} limit 1`); // Replace with your table name
+
+        // Return the data as JSON
+        res.json(result.rows[0]);
+    } catch (error) {
+        console.error("Error fetching data:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
 })
+
+//update patient
+app.put("/api/data/patient/:id", async (req, res) => {
+    console.log(req.body, req.params.id);
+    try {
+        const {name, dob, condition,id } = req.body;
+        // Query the database
+        const result = await pool.query(`UPDATE patients
+         set name = '${name}',
+         dob = '${dob}',
+         condition = '${condition}' WHERE id=${req.params.id}`);
+        res.status(200).json({id, name, dob, condition});
+    } catch (error) {
+        console.error("Error updating data:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+})
+
 
 app.get("/", (req, res) => {
     res.json([
