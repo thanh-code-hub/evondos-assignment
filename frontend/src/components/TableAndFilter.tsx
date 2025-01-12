@@ -92,8 +92,8 @@ export default function TableAndFilter(props: TableAndFilterProps) {
             </thead>
             <tbody>
             {filteredData.map((row) => (
-                <tr key={row.id} className="odd:bg-white even:bg-gray-200 hover:bg-gray-300">
-                    <td className="px-4 py-2 border   border-gray-400 text-sm">
+                <tr key={row.id} role="data-row" className="odd:bg-white even:bg-gray-200 hover:bg-gray-300">
+                    <td className="px-4 py-2 border border-gray-400 text-sm">
                             {row.id}
                     </td>
                     <td className="px-4 py-2 border border-gray-400 text-sm">
