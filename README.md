@@ -64,7 +64,7 @@ The application should also include a search functionality to filter patient rec
   - Consider accessibility best practices, ensuring also the application is user-friendly and intuitive.
   - Write some automated tests for key components and functionalities using a testing framework. No 100% coverage is expected, just a few examples is enough.
 
-## REQUIREMENT ANALYSIS
+## Requirement analysis
 - Allow users to view, add, edit, and delete patient records
   - different views and functionalities
     - use routes / NextJS
