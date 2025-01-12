@@ -14,8 +14,9 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 CREATE TABLE patients (
     id SERIAL PRIMARY KEY,
     name VARCHAR(100),
-    dob VARCHAR(10), //date of birth, should be DATE but for the simplicity of this assignment, I use VARCHAR
-    condition TEXT
+    dob DATE, // date of birth
+    condition TEXT,
+    next_appointment DATE
 );
 ```
 
@@ -23,13 +24,13 @@ CREATE TABLE patients (
 
 ```
 INSERT INTO patients (name, dob, condition)
-VALUES ('John Doe', '01.01.1970', 'good');
+VALUES ('John Doe', '1970-01-01', 'good', '2025-11-01);
 
 INSERT INTO patients (name, dob, condition)
-VALUES ('Jane Doe', '02.01.1970', 'mid');
+VALUES ('Jane Doe', '1970-03-02', 'mid', '2025-06-01);
 
 INSERT INTO patients (name, dob, condition)
-VALUES ('Han Solo', '03.02.1971', 'bad');
+VALUES ('Han Solo', '1970-04-01, 'bad', '2025-02-01);
 ```
 
 2. Open terminal in `backend` directory, install and start the service

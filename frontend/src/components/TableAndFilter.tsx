@@ -86,6 +86,7 @@ export default function TableAndFilter(props: TableAndFilterProps) {
                 <th className="px-4 py-2 border border-gray-400 text-left text-sm font-semibold">Name</th>
                 <th className="px-4 py-2 border border-gray-400 text-left text-sm font-semibold">Date of birth</th>
                 <th className="px-4 py-2 border border-gray-400 text-left text-sm font-semibold">Medical condition</th>
+                <th className="px-4 py-2 border border-gray-400 text-left text-sm font-semibold">Next appointment</th>
                 <th className="px-4 py-2 border border-gray-400 text-left text-sm font-semibold"></th>
                 <th className="px-4 py-2 border border-gray-400 text-left text-sm font-semibold"></th>
             </tr>
@@ -100,10 +101,13 @@ export default function TableAndFilter(props: TableAndFilterProps) {
                         {row.name}
                     </td>
                     <td className="px-4 py-2 border border-gray-400 text-sm">
-                        {row.dob}
+                        {new Date(row.dob).toLocaleDateString('fi-FI')}
                     </td>
                     <td className="px-4 py-2 border border-gray-400 text-sm">
                         {row.condition}
+                    </td>
+                    <td className="px-4 py-2 border border-gray-400 text-sm">
+                        {row.next_appointment && new Date(row.next_appointment).toLocaleDateString('fi-FI')}
                     </td>
                     <td className="px-4 py-2 border border-gray-400 text-sm center">
                         <button

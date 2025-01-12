@@ -1,6 +1,7 @@
 import {useEffect, useState} from "react";
 import {PatientDTO} from "@/dto/PatientDTO";
 import {useRouter} from "next/navigation";
+import {dateParser} from "../../utils/date";
 
 
 interface PatientFormProps {
@@ -12,6 +13,7 @@ export default function PatientForm(props: PatientFormProps) {
     const [name, setName] = useState("");
     const [dob, setDOB] = useState("");
     const [condition, setCondition] = useState("");
+    const [nextAppointment, setNextAppointment] = useState("")
     const router = useRouter()
 
     const {onSubmit, data} = props
@@ -19,15 +21,20 @@ export default function PatientForm(props: PatientFormProps) {
     useEffect(() => {
         if (data) {
             setName(data.name)
-            setDOB(data.dob)
+            setDOB(dateParser(data.dob))
             setCondition(data.condition)
+            if(data.next_appointment)
+                setNextAppointment(dateParser(data.next_appointment))
         }
     }, [data])
 
     const handleSubmit = (event) => {
         event.preventDefault()
         const formData: PatientDTO = {
-            name, dob, condition,
+            name,
+            dob,
+            condition,
+            next_appointment: nextAppointment
         }
         if (data?.id)
             formData.id = data.id;
@@ -50,28 +57,38 @@ export default function PatientForm(props: PatientFormProps) {
                 </div>
                 <div className="flex flex-col ">
                     <label htmlFor="dob">Date of birth</label>
-
-                    <input className="border border-emerald-950 rounded-md" name="dob" type="text" value={dob}
+                    <input className="border border-emerald-950 rounded-md" name="dob" type="date" value={dob}
+                           lang="fi-FI"
                            onChange={(event) => {
                                setDOB(event.target.value)
                            }}/>
                 </div>
                 <div className="flex flex-col">
                     <label htmlFor="condition">Condition</label>
-
                     <input className="border border-emerald-950 rounded-md" name="condition" type="text"
                            value={condition}
                            onChange={(event) => {
                                setCondition(event.target.value)
                            }}/>
                 </div>
+                <div className="flex flex-col">
+                    <label htmlFor="next_appointment">Next appointment</label>
+                    <input className="border border-emerald-950 rounded-md" name="next_appointment" type="date"
+                           lang="fi-FI"
+                           value={nextAppointment}
+                           onChange={(event) => {
+                               setNextAppointment(event.target.value)
+                           }}/>
+                </div>
             </div>
             <div className="flex flex-row w-full justify-center mt-4 ">
-                <button onClick={handleSubmit} className="text-white p-2 rounded-full bg-green-900 min-w-20 mr-4">Save
+                <button onClick={handleSubmit} className="text-white p-2 rounded-full bg-green-900 min-w-20 mr-4">
+                    Save
                 </button>
                 <button onClick={() => {
                     router.push("/")
-                }} className="text-white p-2 rounded-full bg-red-800 min-w-20">Cancel
+                }} className="text-white p-2 rounded-full bg-red-800 min-w-20">
+                    Cancel
                 </button>
             </div>
         </div>

@@ -2,9 +2,11 @@
 import {PatientDTO} from "@/dto/PatientDTO";
 import {useEffect, useState} from "react";
 import PatientForm from "@/components/PatientForm";
+import {useRouter} from "next/navigation";
 
 export default function PatientView ({ params }: {params: Promise<{ id: string }>})  {
     const [data, setData] = useState<PatientDTO>();
+    const router = useRouter();
 
     useEffect(() => {
         async function fetchPosts() {
@@ -27,8 +29,8 @@ export default function PatientView ({ params }: {params: Promise<{ id: string }
                 },
                 body: JSON.stringify(newData)
             })
-            const res = await req.json()
-            setData(res) // update local data once the request is successful
+            await req.json()
+            router.push("/") // update local data once the request is successful
         }
         sendData(patientData)
     }

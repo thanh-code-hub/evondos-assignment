@@ -32,8 +32,7 @@ pool.connect()
 app.get("/api/data/patients/", async (req, res) => {
     try {
         // Query the database
-        const result = await pool.query("SELECT * FROM patients"); // Replace with your table name
-
+        const result = await pool.query("SELECT * FROM patients");
         // Return the data as JSON
         res.json(result.rows);
     } catch (error) {
@@ -45,12 +44,9 @@ app.get("/api/data/patients/", async (req, res) => {
 // create new patient
 app.post("/api/data/patient", async (req, res) => {
     try {
-        const {name, dob, condition } = req.body;
-
+        const {name, dob, condition, next_appointment } = req.body;
         // Query the database
-        const result = await pool.query(`INSERT INTO patients (name, dob, condition) values ('${name}', '${dob}', '${condition}')`); // Replace with your table name
-        console.log(result.rows);
-        // Return the data as JSON
+        const result = await pool.query(`INSERT INTO patients (name, dob, condition, next_appointment) values ('${name}',  to_date('${dob}', 'YYYY-MM-DD'), '${condition}', to_date('${next_appointment}', 'YYYY-MM-DD'))`);
         res.status(200).json({message: 'DONE'});
     } catch (error) {
         console.error("Error creating data:", error);
@@ -62,8 +58,7 @@ app.post("/api/data/patient", async (req, res) => {
 app.get("/api/data/patient/:id", async (req, res) => {
     try {
         // Query the database
-        const result = await pool.query(`SELECT * FROM patients WHERE id=${req.params.id} limit 1`); // Replace with your table name
-
+        const result = await pool.query(`SELECT * FROM patients WHERE id=${req.params.id} limit 1`);
         // Return the data as JSON
         res.json(result.rows[0]);
     } catch (error) {
@@ -75,13 +70,15 @@ app.get("/api/data/patient/:id", async (req, res) => {
 //update patient
 app.put("/api/data/patient/:id", async (req, res) => {
     try {
-        const {name, dob, condition,id } = req.body;
+        const {name, dob, condition,id, next_appointment } = req.body;
+        console.log(req.body);
         // Query the database
         const result = await pool.query(`UPDATE patients
          set name = '${name}',
-         dob = '${dob}',
-         condition = '${condition}' WHERE id=${req.params.id}`);
-        res.status(200).json({id, name, dob, condition});
+         dob = to_date('${dob}', 'YYYY-MM-DD'),
+         condition = '${condition}',
+         next_appointment = to_date('${next_appointment}', 'YYYY-MM-DD') WHERE id=${req.params.id}`);
+        res.status(200).json({id, name, dob, condition, next_appointment});
     } catch (error) {
         console.error("Error updating data:", error);
         res.status(500).json({ error: "Internal Server Error" });

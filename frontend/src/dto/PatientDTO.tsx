@@ -3,4 +3,5 @@ export interface PatientDTO {
     name: string;
     dob: string;
     condition: string;
+    next_appointment?: string;
 }
