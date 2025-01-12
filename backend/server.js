@@ -100,30 +100,7 @@ app.delete("/api/data/patient/:id", async (req, res) => {
 })
 
 app.get("/", (req, res) => {
-    res.json([
-        {
-        id: 1,
-        name: 'check',
-        dob: '01.01.1970',
-        condition: 'good'
-    },{
-            id: 2,
-            name: 'aaa',
-            dob: '01.01.1970',
-            condition: 'good'
-        },{
-            id: 3,
-            name: 'bbbb',
-            dob: '01.01.1970',
-            condition: 'mid'
-        },{
-            id: 4,
-            name: 'ccc',
-            dob: '01.01.1970',
-            condition: 'bad'
-        },
-
-    ])
+    res.send("Node backend is running smoothly ...")
 })
 
 // Start the server

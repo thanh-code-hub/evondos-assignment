@@ -12,7 +12,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 2. Create table `patients` in `postgres` database with the following column
 - id SERIAL PRIMARY KEY, // auto incremental column
 - name VARCHAR(100),
-- dob VARCHAR(10), // should be DATE but for the simplicity of this assignment, I use varchar
+- dob VARCHAR(10), // "date of birth", should be DATE but for the simplicity of this assignment, I use varchar
 - condition TEXT
 
 2. Open terminal in `backend` directory, install and start the service
@@ -20,7 +20,7 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 npm install
 node server.js
 ```
-Backend is served at `localhost:3001`
+Backend is served at `http://localhost:3001/`
 
 3. Open terminal in `frontend` directory, install and start the service
 ```bash
@@ -46,7 +46,7 @@ The application should also include a search functionality to filter patient rec
 ## REQUIREMENT ANALYSIS
 - Allow users to view, add, edit, and delete patient records
   - different views and functionalities
-    - use routes
+    - use routes / NextJS
 - A patient record should include the patient's name, date of birth, medical condition in a free text form, and the date of the next appointment.
   - Data object can be translated to form value
 - search functionality to filter patient records by name or other fields
