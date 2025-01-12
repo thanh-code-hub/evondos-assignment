@@ -47,7 +47,7 @@ export default function TableAndFilter(props: TableAndFilterProps) {
     }, [props.data]);
 
     return <>
-    <div className="w-full flex flex-row justify-between items-center">
+    <div className="w-full flex flex-row justify-between items-center mb-3">
         <div className="flex flex-col">
             <label htmlFor="name">Name: </label>
             <input type="text" name="name" id="name" className="border border-gray-600 rounded-md" onChange={e => {
@@ -67,9 +67,12 @@ export default function TableAndFilter(props: TableAndFilterProps) {
             }}/>
         </div>
         <div>
-            <button onClick={() => {
-                handleFilter()
-            }}>
+            <button
+                className="text-white p-2 rounded-full bg-green-900 min-w-20"
+                onClick={() => {
+                    handleFilter()
+                }}
+            >
                 Filter
             </button>
         </div>
