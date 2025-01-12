@@ -84,8 +84,8 @@ export default function TableAndFilter(props: TableAndFilterProps) {
             <tr className="bg-gray-300">
                 <th className="px-4 py-2 border border-gray-400 text-left text-sm font-semibold">ID</th>
                 <th className="px-4 py-2 border border-gray-400 text-left text-sm font-semibold">Name</th>
-                <th className="px-4 py-2 border border-gray-400 text-left text-sm font-semibold">D.O.B</th>
-                <th className="px-4 py-2 border border-gray-400 text-left text-sm font-semibold">Condition</th>
+                <th className="px-4 py-2 border border-gray-400 text-left text-sm font-semibold">Date of birth</th>
+                <th className="px-4 py-2 border border-gray-400 text-left text-sm font-semibold">Medical condition</th>
                 <th className="px-4 py-2 border border-gray-400 text-left text-sm font-semibold"></th>
                 <th className="px-4 py-2 border border-gray-400 text-left text-sm font-semibold"></th>
             </tr>

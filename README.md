@@ -59,3 +59,7 @@ The application should also include a search functionality to filter patient rec
 - Responsive UI
   - Tailwind CSS
  
+## Testing in frontend
+```bash
+npm run test
+```
