@@ -2,23 +2,34 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 ## Getting Started
 
-First, run the development server:
+1. Install and start PostgreSQL in your local machine with default values
+- **user**: postgres 
+- **host**: localhost   
+- **database**: postgres
+- **password**: admin
+- **port**: 5432
 
+2. Create table `patients` in `postgres` database with the following column
+- id SERIAL PRIMARY KEY, // auto incremental column
+- name VARCHAR(100),
+- dob VARCHAR(10), // should be DATE but for the simplicity of this assignment, I use varchar
+- condition TEXT
+
+2. Open terminal in `backend` directory, install and start the service
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+npm install
+node server.js
+```
+Backend is served at `localhost:3001`
+
+3. Open terminal in `frontend` directory, install and start the service
+```bash
+npm install
+npm run dev 
 ```
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
 ## Objective:
 Develop a simple web application for managing patient records in a healthcare organization.
@@ -34,12 +45,17 @@ The application should also include a search functionality to filter patient rec
 
 ## REQUIREMENT ANALYSIS
 - Allow users to view, add, edit, and delete patient records
-  - different views and functionalities => use routes
+  - different views and functionalities
+    - use routes
 - A patient record should include the patient's name, date of birth, medical condition in a free text form, and the date of the next appointment.
-  - => Data object can be translated to form value
+  - Data object can be translated to form value
 - search functionality to filter patient records by name or other fields
-  - => filter from either frontend or backend, depends on the size of database and use case
-- Backend can Node or Django
+  - filter from either frontend or backend, depends on the size of database and use case.
+    - For now: filter on the Frontend
+- Backend: Node
+  - => APIs for GET, POST, PUT, DELETE
+- Database: PostgreSQL
+- Testing: jest
 - Responsive UI
   - Tailwind CSS
  

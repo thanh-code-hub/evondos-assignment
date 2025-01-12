@@ -8,7 +8,6 @@ export default function NewPatient () {
 
     const handleSubmit = (data: PatientDTO) => {
         async function createNewPatient(newData: PatientDTO) {
-            console.log(newData);
             const req = await fetch('http://localhost:3001/api/data/patient/', {
                 method: 'POST',
                 headers: {
