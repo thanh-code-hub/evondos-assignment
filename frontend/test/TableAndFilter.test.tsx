@@ -39,6 +39,7 @@ describe("TableAndFilter component ", () => {
 
     // Test 1
     test("TableAndFilter Rendering", () => {
+        // expect 2 rows in the table
         expect(rows).toHaveLength(2);
     })
 })

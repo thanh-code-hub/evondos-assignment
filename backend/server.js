@@ -88,6 +88,7 @@ app.put("/api/data/patient/:id", async (req, res) => {
     }
 })
 
+// delete patient
 app.delete("/api/data/patient/:id", async (req, res) => {
     try {
         // Query the database

@@ -4,16 +4,33 @@ This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-
 
 1. Install and start PostgreSQL in your local machine with default values
 - **user**: postgres 
-- **host**: localhost   
-- **database**: postgres
 - **password**: admin
+- **host**: localhost   
 - **port**: 5432
+- **database**: postgres
 
-2. Create table `patients` in `postgres` database with the following column
-- id SERIAL PRIMARY KEY, // auto incremental column
-- name VARCHAR(100),
-- dob VARCHAR(10), // "date of birth", should be DATE but for the simplicity of this assignment, I use varchar
-- condition TEXT
+2. Connect to in `postgres` database and create table `patients`  with the following query
+```
+CREATE TABLE patients (
+    id SERIAL PRIMARY KEY,
+    name VARCHAR(100),
+    dob VARCHAR(10), //date of birth, should be DATE but for the simplicity of this assignment, I use VARCHAR
+    condition TEXT
+);
+```
+
+**Optional**: These queries can be used to add initial data to the table
+
+```
+INSERT INTO patients (name, dob, condition)
+VALUES ('John Doe', '01.01.1970', 'good');
+
+INSERT INTO patients (name, dob, condition)
+VALUES ('Jane Doe', '02.01.1970', 'mid');
+
+INSERT INTO patients (name, dob, condition)
+VALUES ('Han Solo', '03.02.1971', 'bad');
+```
 
 2. Open terminal in `backend` directory, install and start the service
 ```bash
