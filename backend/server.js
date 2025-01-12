@@ -29,10 +29,10 @@ const pool = new Pool({
 pool.connect()
 
 // API endpoint to fetch data from the database
-app.get("/api/data", async (req, res) => {
+app.get("/api/data/patients/", async (req, res) => {
     try {
         // Query the database
-        const result = await pool.query("SELECT * FROM your_table_name"); // Replace with your table name
+        const result = await pool.query("SELECT * FROM patients"); // Replace with your table name
 
         // Return the data as JSON
         res.json(result.rows);
@@ -41,6 +41,22 @@ app.get("/api/data", async (req, res) => {
         res.status(500).json({ error: "Internal Server Error" });
     }
 });
+
+// create new patient
+app.post("/api/data/patient", async (req, res) => {
+    try {
+        const {name, dob, condition } = req.body;
+
+        // Query the database
+        const result = await pool.query(`INSERT INTO patients (name, dob, condition) values ('${name}', '${dob}', '${condition}')`); // Replace with your table name
+        console.log(result.rows);
+        // Return the data as JSON
+        res.status(200).json({message: 'DONE'});
+    } catch (error) {
+        console.error("Error creating data:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+})
 
 //fetch patient by id
 app.get("/api/data/patient/:id", async (req, res) => {
@@ -58,7 +74,6 @@ app.get("/api/data/patient/:id", async (req, res) => {
 
 //update patient
 app.put("/api/data/patient/:id", async (req, res) => {
-    console.log(req.body, req.params.id);
     try {
         const {name, dob, condition,id } = req.body;
         // Query the database
@@ -73,6 +88,16 @@ app.put("/api/data/patient/:id", async (req, res) => {
     }
 })
 
+app.delete("/api/data/patient/:id", async (req, res) => {
+    try {
+        // Query the database
+        const result = await pool.query(`DELETE FROM patients WHERE id=${req.params.id}`);
+        res.status(200).json({message: 'DONE'});
+    } catch (error) {
+        console.error("Error deleting data:", error);
+        res.status(500).json({ error: "Internal Server Error" });
+    }
+})
 
 app.get("/", (req, res) => {
     res.json([

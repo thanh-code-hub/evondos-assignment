@@ -1,13 +1,10 @@
 "use client"
 import {PatientDTO} from "@/dto/PatientDTO";
 import {useEffect, useState} from "react";
+import PatientForm from "@/components/PatientForm";
 
 export default function PatientView ({ params }: {params: Promise<{ id: string }>})  {
-    const [data, setData] = useState<PatientDTO>({
-        name: "",
-        dob: "",
-        condition: ""
-    });
+    const [data, setData] = useState<PatientDTO>();
 
     useEffect(() => {
         async function fetchPosts() {
@@ -19,9 +16,7 @@ export default function PatientView ({ params }: {params: Promise<{ id: string }
         fetchPosts()
     }, [])
 
-    const onSubmit = e => {
-        e.preventDefault()
-
+    const onSubmit = (patientData: PatientDTO) => {
         async function sendData(newData: PatientDTO) {
             console.log(newData);
             const req = await fetch('http://localhost:3001/api/data/patient/'+newData.id, {
@@ -35,22 +30,8 @@ export default function PatientView ({ params }: {params: Promise<{ id: string }
             const res = await req.json()
             setData(res) // update local data once the request is successful
         }
-        sendData(data)
+        sendData(patientData)
     }
 
-    const updateValue = (e) => {
-        const valueName = e.target.getAttribute('name')
-        console.log(valueName)
-        setData({
-            ...data,
-            [valueName]: e.target.value
-        })
-    }
-
-     return data && <form >
-         <input className="border border-emerald-950 rounded-md" name="name" type="text"  value={data.name} onChange={updateValue}/>
-         <input className="border border-emerald-950 rounded-md" name="dob" type="text" value={data.dob} onChange={updateValue}/>
-         <input className="border border-emerald-950 rounded-md" name="condition" type="text" value={data.condition} onChange={updateValue}/>
-         <button onClick={onSubmit}>Save</button>
-     </form>
+     return <PatientForm data={data} onSubmit={onSubmit} />
 }

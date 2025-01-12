@@ -15,35 +15,54 @@ export default function TableAndFilter(props: TableAndFilterProps) {
     const router = useRouter()
 
     const handleFilter = () => {
-        console.log(name, dob, condition)
-        setFilteredData(props.data.filter(item =>
-            (name && item.name.includes(name))
-            || (dob && item.dob === dob)
-            || (condition && item.condition === condition)
-        ));
+        setFilteredData(props.data.filter(item => {
+            if(name)
+                return item.name.includes(name)
+            else if (dob)
+                return item.dob === dob
+            else if (condition)
+                return item.condition === condition
+            return item
+        }));
+    }
+
+    const handleDelete = (patientId: number) => {
+        async function deletePatient(patientId: number) {
+            fetch('http://localhost:3001/api/data/patient/'+patientId, {
+                method: 'DELETE',
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json'
+                },
+            })
+                .then(() => {
+                    router.refresh()
+                })
+        }
+        deletePatient(patientId)
     }
 
     useEffect(() => {
         setFilteredData(props.data);
-    }, []);
+    }, [props.data]);
 
     return <>
     <div className="w-full flex flex-row justify-between items-center">
         <div className="flex flex-col">
             <label htmlFor="name">Name: </label>
-            <input type="text" name="name" id="name" className="border border-b-gray-600" onChange={e => {
+            <input type="text" name="name" id="name" className="border border-gray-600 rounded-md" onChange={e => {
                 setName(e.target.value)
             }}/>
         </div>
         <div className="flex flex-col">
             <label htmlFor="dob">Date of birth: </label>
-            <input type="text" name="dob" id="dob" className="border border-b-gray-600" onChange={e => {
+            <input type="text" name="dob" id="dob" className="border border-gray-600 rounded-md" onChange={e => {
                 setDOB(e.target.value)
             }}/>
         </div>
         <div className="flex flex-col">
             <label htmlFor="condition">Condition: </label>
-            <input type="text" name="condition" id="condition" className="border border-b-gray-600" onChange={e => {
+            <input type="text" name="condition" id="condition" className="border border-gray-600 rounded-md" onChange={e => {
                 setCondition(e.target.value)
             }}/>
         </div>
@@ -57,27 +76,50 @@ export default function TableAndFilter(props: TableAndFilterProps) {
     </div>
 
     <div className="overflow-x-auto">
-        <table className="min-w-full border-collapse border border-gray-200 bg-white">
+        <table className="min-w-full border-collapse border border-gray-400 bg-white">
             <thead>
-            <tr className="bg-gray-100">
-                <th className="px-4 py-2 border border-gray-200 text-left text-sm font-semibold text-gray-700">ID</th>
-                <th className="px-4 py-2 border border-gray-200 text-left text-sm font-semibold text-gray-700">Name</th>
-                <th className="px-4 py-2 border border-gray-200 text-left text-sm font-semibold text-gray-700">D.O.B</th>
-                <th className="px-4 py-2 border border-gray-200 text-left text-sm font-semibold text-gray-700">Condition</th>
+            <tr className="bg-gray-300">
+                <th className="px-4 py-2 border border-gray-400 text-left text-sm font-semibold">ID</th>
+                <th className="px-4 py-2 border border-gray-400 text-left text-sm font-semibold">Name</th>
+                <th className="px-4 py-2 border border-gray-400 text-left text-sm font-semibold">D.O.B</th>
+                <th className="px-4 py-2 border border-gray-400 text-left text-sm font-semibold">Condition</th>
+                <th className="px-4 py-2 border border-gray-400 text-left text-sm font-semibold"></th>
+                <th className="px-4 py-2 border border-gray-400 text-left text-sm font-semibold"></th>
             </tr>
             </thead>
             <tbody>
             {filteredData.map((row) => (
-                <tr key={row.id} className="odd:bg-white even:bg-gray-50">
-                    <td className="px-4 py-2 border border-gray-200 text-sm text-gray-700">
-                        <button onClick={() => router.push('/patient/' + row.id)}>
-
-                        {row.id}
+                <tr key={row.id} className="odd:bg-white even:bg-gray-200 hover:bg-gray-300">
+                    <td className="px-4 py-2 border   border-gray-400 text-sm">
+                            {row.id}
+                    </td>
+                    <td className="px-4 py-2 border border-gray-400 text-sm">
+                        {row.name}
+                    </td>
+                    <td className="px-4 py-2 border border-gray-400 text-sm">
+                        {row.dob}
+                    </td>
+                    <td className="px-4 py-2 border border-gray-400 text-sm">
+                        {row.condition}
+                    </td>
+                    <td className="px-4 py-2 border border-gray-400 text-sm center">
+                        <button
+                            onClick={() => router.push('/patient/' + row.id)}
+                            className="p-2 rounded-md text-white bg-green-800"
+                        >
+                            View patient
                         </button>
                     </td>
-                    <td className="px-4 py-2 border border-gray-200 text-sm text-gray-700">{row.name}</td>
-                    <td className="px-4 py-2 border border-gray-200 text-sm text-gray-700">{row.dob}</td>
-                    <td className="px-4 py-2 border border-gray-200 text-sm text-gray-700">{row.condition}</td>
+                    <td className="px-4 py-2 border border-gray-400 text-sm center">
+                        <button
+                            onClick={() => {
+                                handleDelete(row.id)
+                            }}
+                            className="p-2 rounded-md text-white bg-red-800"
+                        >
+                            Delete patient
+                        </button>
+                    </td>
                 </tr>
             ))}
             </tbody>
