@@ -47,6 +47,10 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
+4. Testing in frontend
+```bash
+npm run test
+```
 
 ## Objective:
 Develop a simple web application for managing patient records in a healthcare organization.
@@ -70,13 +74,23 @@ The application should also include a search functionality to filter patient rec
   - filter from either frontend or backend, depends on the size of database and use case.
     - For now: filter on the Frontend
 - Backend: Node
-  - => APIs for GET, POST, PUT, DELETE
+  - APIs for GET, POST, PUT, DELETE
 - Database: PostgreSQL
 - Testing: jest
 - Responsive UI
   - Tailwind CSS
  
-## Testing in frontend
-```bash
-npm run test
-```
+## Development progress
+
+- Start with basic routes for UI: viewing and editing. Mock data with dummy object
+- Set up backend and database. Create APIs for fetching and updating data
+- Basic styling with Tailwind
+- Implement create and delete feature, create POST and DELETE APIs for creating and deleting 
+- Implement unit test
+
+## Obstacles
+- CORS policy
+  - Solution: add frontend origin to CORS policy in backend
+- Server vs Client components
+  - Server components are used for server-side rendering and non-interactive. 
+  - Solution: to perform actions like searching, filtering, client component must be used.
